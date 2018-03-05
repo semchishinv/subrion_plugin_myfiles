@@ -30,9 +30,7 @@ class iaBackendController extends iaAbstractControllerModuleBackend
     protected $_helperName = 'myfile';
     protected $_gridColumns = ['title', 'body', 'status','featured','date_added'];
     protected $_gridFilters = ['title' => self::LIKE, 'status' => self::EQUAL, 'gender' => self::EQUAL];
-
     protected $_activityLog = ['item' => 'file'];
-
 
     public function init()
     {

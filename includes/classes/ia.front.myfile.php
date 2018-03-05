@@ -39,7 +39,6 @@ class iaMyfile extends abstractModuleFront
 
     public function get(){
 
-
         if('latest' == $this->iaCore->get('myfile_type')){
             $limit = $this->iaCore->get('myfile_entry_latest');
             $where = [

@@ -34,9 +34,8 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType()) {
         if(false === $myfiles){
             $myfiles = $iaMyfile->get();
             $this->iaCache->write('myfiles', $myfiles);
-            echo 1;
         }
-        echo 2;
+
         $iaView->assign('myfiles', $myfiles);
     }
 }
