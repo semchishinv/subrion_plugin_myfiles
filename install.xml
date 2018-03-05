@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module type="plugin" name="myfiles">
+    <title>File Manager</title>
+    <summary>This plugin allows administrators to upload/manage files for user download purposes</summary>
+    <author>Intelliants LLC</author>
+    <contributor>Intelliants LLC</contributor>
+    <version>4.1.0</version>
+    <date>2018-03-03</date>
+    <compatibility>4.1.0</compatibility>
+
+    <items>
+        <item>myfile</item>
+    </items>
+
+    <phrases>
+        <phrase category="frontend" key="no_myfiles_yet">No files yet</phrase>
+        <phrase category="frontend" key="last_uploaded_myfiles">Last uploaded files</phrase>
+        <phrase category="admin" key="add_myfiles">Upload Files</phrase>
+        <phrase category="admin" key="myfiles">Files</phrase>
+    </phrases>
+
+    <actions>
+        <action name="myfiles" url="myfiles/" icon="list" pages="myfiles:add,myfiles:edit"><![CDATA[]]></action>
+        <action name="add_myfiles" url="myfiles/add/" icon="plus" pages="myfiles:read,myfiles:edit"><![CDATA[]]></action>
+    </actions>
+
+    <pages>
+        <page url="myfiles/" name="myfiles" menus="main">File Manager</page>
+    </pages>
+
+    <adminpages>
+        <page group="content" name="myfiles" order="55" url="myfiles/" menus="menu">Files Manager</page>
+    </adminpages>
+
+    <configgroup name="myfiles">File Manager</configgroup>
+    <config group="myfiles" name="myfile" type="divider">General</config>
+    <config group="myfiles" name="myfile_entry_latest" type="text" description="Number of displayed Latest entries">6</config>
+    <config group="myfiles" name="myfile_entry_featured" type="text" description="Number of displayed Featured entries">6</config>
+    <config group="myfiles" name="myfile_type" type="select" values="latest,featured" description="Select one">latest</config>
+
+    <fields_groups>
+        <group item="myfile" name="general" title="General"><![CDATA[]]></group>
+    </fields_groups>
+
+    <fields>
+        <field name="title" item="myfile" type="text" group="general" length="70" required="1" multilingual="1" adminonly="1">Title</field>
+        <field name="body" item="myfile" type="textarea" group="general" editor="1" required="1" multilingual="1" adminonly="1">Description</field>
+        <field name="upload_file" item="myfile" title="0" type="storage" group="general" required="1"length="100" file_types="pdf,doc,odf,mov" adminonly="1">Upload file</field>
+    </fields>
+
+    <blocks>
+        <block name="myfiles" title="File Manager" collapsible="1" position="left" classname="an an-info" order="-1" type="smarty" filename="block.myfiles.tpl"><![CDATA[]]></block>
+    </blocks>
+
+    <hooks>
+        <hook name="phpCoreBeforePageDisplay" page_type="front" filename="hook.myfiles-load.php"><![CDATA[]]></hook>
+    </hooks>
+
+    <install>
+        <sql>
+            <![CDATA[
+CREATE TABLE `{prefix}myfiles` (
+    `id` int(11) NOT NULL auto_increment,
+    `title` tinytext NOT NULL,
+    `body` text NOT NULL,
+    `date_added` datetime,
+    `date_modified` datetime,
+    `status` enum('active', 'inactive') NOT NULL default 'inactive',
+    `order` mediumint(8) NOT NULL default 0,
+    `featured` tinyint(1) unsigned NOT NULL default 0,
+    `featured_start` datetime NULL,
+    `featured_end` datetime NULL,
+    PRIMARY KEY  (`id`)
+) {mysql_version};
+            ]]>
+        </sql>
+    </install>
+
+    <uninstall>
+        <sql>
+            <![CDATA[
+DROP TABLE IF EXISTS `{prefix}myfiles`;
+            ]]>
+        </sql>
+    </uninstall>
+</module>
+
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<module type="plugin" name="myfiles">-->
+    <!--<title>File Manager</title>-->
+    <!--<summary>This plugin allows administrators to upload/manage files for user download purposes</summary>-->
+    <!--<author>Intelliants LLC</author>-->
+    <!--<contributor>Intelliants LLC</contributor>-->
+    <!--<version>4.1.0</version>-->
+    <!--<date>2018-03-03</date>-->
+    <!--<compatibility>4.1.0</compatibility>-->
+
+    <!--<items>-->
+        <!--<item>myfile</item>-->
+    <!--</items>-->
+
+    <!--<phrases>-->
+        <!--<phrase category="frontend" key="no_myfiles_yet">No files yet</phrase>-->
+        <!--<phrase category="frontend" key="last_uploaded_myfiles">Last uploaded files</phrase>-->
+        <!--<phrase category="admin" key="add_myfiles">Upload Files</phrase>-->
+        <!--<phrase category="admin" key="myfiles">Files</phrase>-->
+    <!--</phrases>-->
+
+    <!--<actions>-->
+        <!--<action name="myfiles" url="myfiles/" icon="list" pages="myfiles:add,myfiles:edit"><![CDATA[]]></action>-->
+        <!--<action name="add_myfiles" url="myfiles/add/" icon="plus" pages="myfiles:read,myfiles:edit"><![CDATA[]]></action>-->
+    <!--</actions>-->
+
+    <!--<pages>-->
+        <!--<page url="myfiles/" name="myfiles" menus="main">File Manager</page>-->
+    <!--</pages>-->
+
+
+    <!--<adminpages>-->
+        <!--<page group="content" name="myfiles" order="55" url="myfiles/" menus="menu">Files Manager</page>-->
+    <!--</adminpages>-->
+
+
+
+    <!--<configgroup name="myfiles">File Manager</configgroup>-->
+    <!--<config group="myfiles" name="myfile" type="divider">General</config>-->
+    <!--<config group="myfiles" name="myfile_entry_limit" type="text" description="Number of displayed entries on Frond End Block">6</config>-->
+    <!--<config group="myfiles" name="myfile_type" type="select" values="latest,featured" description="Select one">latest</config>-->
+
+    <!--<fields_groups>-->
+        <!--<group item="myfile" name="general" title="General"><![CDATA[]]></group>-->
+    <!--</fields_groups>-->
+
+    <!--<fields>-->
+        <!--<field name="title" item="myfile" type="text" group="general" length="70" required="1" multilingual="1" adminonly="1">Title</field>-->
+        <!--<field name="body" item="myfile" type="textarea" group="general" editor="1" required="1" multilingual="1" adminonly="1">Description</field>-->
+        <!--<field name="upload_file" item="myfile" type="storage" group="general" required="0" adminonly="1">Upload ile</field>-->
+    <!--</fields>-->
+
+    <!--&lt;!&ndash;<blocks>&ndash;&gt;-->
+        <!--&lt;!&ndash;<block name="myfiles" title="myfiles" collapsible="1" position="left" classname="an an&#45;&#45;info" order="-1" type="smarty" filename="block.myfiles.tpl"><![CDATA[]]></block>&ndash;&gt;-->
+    <!--&lt;!&ndash;</blocks>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<hooks>&ndash;&gt;-->
+        <!--&lt;!&ndash;<hook name="phpCoreBeforePageDisplay" page_type="front" filename="hook.myfiles-load.php"><![CDATA[]]></hook>&ndash;&gt;-->
+    <!--&lt;!&ndash;</hooks>&ndash;&gt;-->
+
+    <!--<install>-->
+        <!--<sql>-->
+            <!--<![CDATA[-->
+<!--CREATE TABLE `{prefix}myfiles` (-->
+    <!--`id` int(11) NOT NULL auto_increment,-->
+    <!--`title` tinytext NOT NULL,-->
+    <!--`body` text NOT NULL,-->
+    <!--`file_path` text NOT NULL,-->
+    <!--`date_added` date,-->
+    <!--`date_modified` date,-->
+    <!--`status` enum('active', 'inactive') NOT NULL default 'inactive',-->
+    <!--`order` mediumint(8) NOT NULL default 0,-->
+    <!--`featured` tinyint(1) unsigned NOT NULL default 0,-->
+    <!--`featured_start` datetime NULL,-->
+    <!--`featured_end` datetime NULL,-->
+    <!--PRIMARY KEY  (`id`)-->
+<!--) {mysql_version};-->
+            <!--]]>-->
+        <!--</sql>-->
+    <!--</install>-->
+
+    <!--<uninstall>-->
+        <!--<sql>-->
+            <!--<![CDATA[-->
+<!--DROP TABLE IF EXISTS `{prefix}myfiles`;-->
+            <!--]]>-->
+        <!--</sql>-->
+    <!--</uninstall>-->
+<!--</module>-->
